@@ -1,35 +1,100 @@
 <!DOCTYPE html>
 <html>
-	<head>
-	<script> 
-		$(function(){
-			$('#header').load('headerLayout.html');
-		}); 
-	</script>
-	</head>
-	
-	<nav id="topnav">
-		<a href="#home"> Home</a>
-		<input name='mainSearchBar' type='text' placeholder="Search..." action='/' method="POST">
-	</nav>
-	
-	<body>
-		<script>
-			$(function(){
-				$('#body').load('bodyLayout.html'); 
-			}); 
-		</script>
-		
-		<div class="panel panel-default">
-			<div class="panel-heading">Hero Name</div>
-			<div class="panel-body">
-				<!-- TODO: connect the list of images source inside here!!!-->
 
-				<img class="img-responsive" src="/static/public/assets/images/hero-images/abaddon_sb.jpg" class="img-rounded">
-				<img class="img-responsive" src="/static/public/assets/images/hero-images/abyssal_underlord_sb.png" class="img-rounded">
-				<img class="img-responsive" src="/static/public/assets/images/hero-images/alchemist_sb.png" class="img-rounded">
-			</div>
+<head>
+	<script>
+		$(function() {
+			$('#header').load('headerLayout.html');
+		});
+
+	</script>
+	<style>
+		#dropDiv {
+			float: left;
+			width: 500px;
+			height: 40px;
+			margin: 10px;
+			padding: 10px;
+			border: 1px solid black;
+		}
+
+	</style>
+</head>
+
+<nav id="topnav">
+	<a href="#home"> Home</a>
+	<input name='mainSearchBar' type='text' placeholder="Search..." action='/' method="POST">
+</nav>
+
+<body>
+	<script>
+		$(function() {
+			$('#body').load('bodyLayout.html');
+		});
+
+	</script>
+	<script>
+		function allowDrop(event) {
+			event.preventDefault();
+		}
+
+		function drag(event) {
+			event.dataTransfer.setData("text", ev.target.id);
+		}
+
+		function drop(event) {
+			event.preventDefault();
+			var data = event.dataTransfer.getData("text");
+			event.target.appendChild(document.getElementById(data));
+		}
+
+	</script>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Hero Name</div>
+		<!--		<div class="panel-body">-->
+		<!-- TODO: connect the list of images source inside here!!!-->
+		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<img class="img-responsive" src="/static/public/assets/images/hero-images/beastmaster_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
 		</div>
-	</body>
-	
+		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<img class="img-responsive" src="/static/public/assets/images/hero-images/jakiro_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+		</div>
+		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<img class="img-responsive" src="/static/public/assets/images/hero-images/nyx_assassin_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+		</div>
+		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<img class="img-responsive" src="/static/public/assets/images/hero-images/doom_bringer_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+		</div>
+		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<img class="img-responsive" src="/static/public/assets/images/hero-images/terrorblade_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+		</div>
+		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<img class="img-responsive" src="/static/public/assets/images/hero-images/clinkz_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+		</div>
+		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<img class="img-responsive" src="/static/public/assets/images/hero-images/leshrac_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+		</div>
+		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<img class="img-responsive" src="/static/public/assets/images/hero-images/shadow_demon_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+		</div>
+		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<img class="img-responsive" src="/static/public/assets/images/hero-images/vengefulspirit_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+		</div>
+		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<img class="img-responsive" src="/static/public/assets/images/hero-images/viper_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+		</div>
+		<!--		</div>-->
+	</div>
+
+	<!--TODO: fix dropping multiples images aligned together as rows, cols in the table -->
+	<div class="dropDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+	</div>
+
+	<div class="dropDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+	</div>
+</body>
+
 </html>

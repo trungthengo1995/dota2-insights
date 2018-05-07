@@ -1,0 +1,8 @@
+#dropDiv {
+    float: left;
+    width: 500px;
+    height: 40px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+}
