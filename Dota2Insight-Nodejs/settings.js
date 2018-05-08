@@ -16,7 +16,7 @@ module.exports = {
 	production: {
 			db: {
 				dialect: 'sqlite',
-				storage: ':memory:'		
+				storage: 'db/database.sqlite'		
 			}
 	}
 };

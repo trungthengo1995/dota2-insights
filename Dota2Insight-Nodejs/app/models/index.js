@@ -15,7 +15,7 @@ const dbSettings = Settings[Settings.env].db;
 			
 //open the database connection
 //NOTE: ./ instead of ../ for this case - just's something I tried
-const db = new sqlite3.Database('./db/dota2.db', sqlite3.OPEN_READWRITE, (err) => {
+const db = new sqlite3.Database('././db/dota2.db', sqlite3.OPEN_READWRITE, (err) => {
 	if (err) {
     console.error(err.message);
   }

@@ -2,12 +2,6 @@
 <html>
 
 <head>
-	<script>
-		$(function() {
-			$('#header').load('headerLayout.html');
-		});
-
-	</script>
 	<style>
 		#dropDiv {
 			float: left;
@@ -17,74 +11,117 @@
 			padding: 10px;
 			border: 1px solid black;
 		}
-
+		body {
+			padding: 20px;
+		}
 	</style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-
-<nav id="topnav">
-	<a href="#home"> Home</a>
-	<input name='mainSearchBar' type='text' placeholder="Search..." action='/' method="POST">
-</nav>
 
 <body>
 	<script>
 		$(function() {
 			$('#body').load('bodyLayout.html');
 		});
-
 	</script>
+
 	<script>
 		function allowDrop(event) {
 			event.preventDefault();
 		}
 
 		function drag(event) {
-			event.dataTransfer.setData("text", ev.target.id);
+			event.dataTransfer.setData("text", event.target.id);
 		}
 
 		function drop(event) {
 			event.preventDefault();
 			var data = event.dataTransfer.getData("text");
+			console.log(data);
 			event.target.appendChild(document.getElementById(data));
 		}
 	</script>
 
-	<div class="panel panel-default">
-		<div class="panel-heading">Hero Name</div>
-		<!--		<div class="panel-body">-->
-		<!-- TODO: connect the list of images source inside here!!!-->
-		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<img class="img-responsive" src="../../static/public/assets/images/hero-images/beastmaster_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-		</div>
-		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<img class="img-responsive" src="../../static/public/assets/images/hero-images/jakiro_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-		</div>
-		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<img class="img-responsive" src="../../static/public/assets/images/hero-images/nyx_assassin_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-		</div>
-		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<img class="img-responsive" src="../../static/public/assets/images/hero-images/doom_bringer_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-		</div>
-		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<img class="img-responsive" src="../../static/public/assets/images/hero-images/terrorblade_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-		</div>
-		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<img class="img-responsive" src="../../static/public/assets/images/hero-images/clinkz_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-		</div>
-		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<img class="img-responsive"  src="../../static/public/assets/images/hero-images/leshrac_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-		</div>
-		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<img class="img-responsive" src="../../static/public/assets/images/hero-images/shadow_demon_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-		</div>
-		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<img class="img-responsive" src="../../static/public/assets/images/hero-images/vengefulspirit_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-		</div>
-		<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-			<img class="img-responsive" src="../../static/public/assets/images/hero-images/viper_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-		</div>
-		<!--		</div>-->
+	<h1>DotA 2 Winning Prediction</h1>
+
+	<div class="form-group">
+	  <label for="usr">Search Heroes:</label>
+	  <input type="text" class="form-control" id="usr">
 	</div>
+
+	<div class="panel panel-default">
+	 	<div class="panel-heading">Output Heroes</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Drag/Drop Heroes for 2 Teams</div>
+		<!--		<div class="panel-body">-->
+<<<<<<< HEAD
+		<div id="dragDropHeroImages" class="panel panel-default">
+			<img id="drag1" class="img-responsive" src="../../static/public/assets/images/hero-images/beastmaster_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+			<!-- <div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<img class="img-responsive" src="../../static/public/assets/images/hero-images/jakiro_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+			</div>
+			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<img class="img-responsive" src="/static/public/assets/images/hero-images/nyx_assassin_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+			</div>
+			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<img class="img-responsive" src="/static/public/assets/images/hero-images/doom_bringer_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+			</div>
+			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<img class="img-responsive" src="/static/public/assets/images/hero-images/terrorblade_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+			</div>
+			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<img class="img-responsive" src="/static/public/assets/images/hero-images/clinkz_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+			</div>
+			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<img class="img-responsive" src="/static/public/assets/images/hero-images/leshrac_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+			</div>
+			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<img class="img-responsive" src="/static/public/assets/images/hero-images/shadow_demon_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+			</div>
+			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<img class="img-responsive" src="/static/public/assets/images/hero-images/vengefulspirit_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+			</div>
+			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<img class="img-responsive" src="/static/public/assets/images/hero-images/viper_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+			</div> -->
+		</div>
+	<table class="table table-bordered" 
+		style="table-layout: fixed">
+		<thead>
+			<tr>
+		    	<th>Radiant</th>
+		        <th>Dire</th>
+		    </tr>
+	    </thead>
+	    <tbody>
+	 	    <tr>
+		        <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+	        	<td></td>
+	      	</tr>
+	      	<tr>
+		        <td></td>
+		        <td></td>
+		    </tr>
+		    <tr>
+		        <td></td>
+		        <td></td>
+		    </tr>
+		    <tr>
+		        <td></td>
+		        <td></td>
+		    </tr>
+		    <tr>
+		        <td></td>
+		        <td></td>
+		    </tr>
+	    </tbody>
+	</table>
 
 	<!--TODO: fix dropping multiples images aligned together as rows, cols in the table -->
 	<div class="dropDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
