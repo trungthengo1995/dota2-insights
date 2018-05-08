@@ -16,36 +16,22 @@ server.connection({
 	port: Settings.port
 });
 
-console.log('About to run the app!')
-
-////create a testing route and initiate the HTTP call -> passed!
-server.route({
-	method: 'GET',
-	path: '/',
-	handler: (request, reply) => {
-		reply('Hello, this is the Nodejs project for Dota2Insight');
-	}
-});
-
-server.start((err) => {
-  Hoek.assert(!err, err);
-  console.log(`Server running at: ${server.info.uri}`);
-});
-
-/*
-server.register([
-  require('vision'),
-  require('inert')
-], (err) => {
+server.register(
+	[require('vision'),
+  require('inert')], 
+	(err) => {
   Hoek.assert(!err, err);
 
   server.views({
-    engines: { pug: require('pug') },
+    engines: { 
+			html: require('handlebars')
+		},
     path: Path.join(__dirname, 'app/views'),
     compileOptions: {
       pretty: false
     },
-    isCached: Settings.env === 'production'
+    isCached: Settings.env === 'production',
+
   });
 
   // Add routes
@@ -54,11 +40,10 @@ server.register([
 
 
 //basically synchronize the model with real-time data
-Models.sequelize.sync().then( () => {
+//Models.sequelize.sync().then( () => {
 	server.start( (err) => {
 		Hoek.assert(!err, err); 
-
-		console.log('Server running at: ${server.info.uri}');	
+//		console.log('The connection name as string is: ' + server.info.uri + ' on the port ' + server.info.port)
 	});
-}); 
-*/
+//}); 
+

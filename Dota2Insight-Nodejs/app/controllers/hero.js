@@ -9,4 +9,7 @@ const Path = require('path');
 
 //NOTE|TODO: customize the following one to create CRUD functionalities corresponding to the controller 
 module.exports = {
+	 read: (request, reply) => {
+
+  }
 };

@@ -2,47 +2,21 @@
 
 const Path = require('path'); 
 //const Hero = require('./controllers/hero'); 
-//const Home = require('./controllers/home'); 
+const Home = require('./controllers/home'); 
+
+console.log('Running the route.js. Inside the handler to get the directory /static/public')
 
 module.exports = [
   {
     method: 'GET',
     path: '/',
-//    handler: Home,
+//    handler: function (request, reply) {
+//
+//        return reply.view('index.html');
+//    },
+		handler: Home, 
     config: {
-      description: 'Gets all the notes available'
-    }
-  },
-	{
-    method: 'POST',
-    path: '/note',
-//    handler: Note.create,
-    config: {
-      description: 'Adds a new note'
-    }
-  },
-	{
-    method: 'GET',
-    path: '/note/{slug}',
-//    handler: Note.read,
-    config: {
-      description: 'Gets the content of a note'
-    }
-  },
-	{
-    method: 'PUT',
-    path: '/note/{slug}',
-//    handler: Note.update,
-    config: {
-      description: 'Updates the selected note'
-    }
-  },
-	{
-    method: 'GET',
-    path: '/note/{slug}/delete',
-//    handler: Note.delete,
-    config: {
-      description: 'Deletes the selected note'
+      description: 'Dota 2 Winning Prediction'
     }
   },
 	{
@@ -56,6 +30,6 @@ module.exports = [
     },
     config: {
       description: 'Provides static resources'
-    }
+    },
   }
 ];

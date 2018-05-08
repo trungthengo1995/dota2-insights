@@ -1,26 +1,40 @@
 'use strict'
+//Basically: set up Nodejs objects (Path, Sequelize, Fs) and settings and read/execute all model files in the directory 
+console.log("Running index script (first script) for the model!")
 
 //Contain the connection to database and Sequelize settup 
 const Fs = require('fs');
 const Path = require('path');
-const Sequelize = require('sequelize');
+//const Sequelize = require('sequelize');
+const sqlite3 = require('sqlite3').verbose();
+
+
+//NOTE: these are just fixed trivial settings -> don't change
 const Settings = require('../../settings');
-const dbSettings = Settings[Settings.env].db;
+const dbSettings = Settings[Settings.env].db; 
 			
-const sequelize = new Sequelize(dbSettings.database, dbSettings.user, dbSettings.passwords, dbSettings);
-const db = {}; 
+//open the database connection
+//NOTE: ./ instead of ../ for this case - just's something I tried
+const db = new sqlite3.Database('./db/dota2.db', sqlite3.OPEN_READWRITE, (err) => {
+	if (err) {
+    console.error(err.message);
+  }
+  console.log('Connected to the dota2 database.');
+}); 
 
-// Read all the files in this directory (/model) and import them as models
-Fs.readdirSync(__dirname)
-		.filter((file) => (file.indexOf('.') != 0) && (file !== 'index.js'))
-		.forEach( (file) => {
-				const model = sequelize.import(Path.join(__dirname, file)); 
-				db[model.name] = db; 
-		}); 
-
-//add sequelize and Sequelize as part of our db object, the first one is used in server.js to connect to the database before starting the server, and the second one is included for convenience 
-db.sequelize = sequelize; 
-db.Sequelize = Sequelize; 
-
+/*
+//pre-testing for the SQL query
+db.serialize(() => {
+  db.each(`SELECT HeroId as id,
+                  Name as name
+           FROM Heroes`, (err, row) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log(row.id + "\t" + row.name);
+  });
+});
+*/
+module.exports = db; 
 
 
