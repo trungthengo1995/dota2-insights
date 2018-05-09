@@ -14,6 +14,11 @@
 		body {
 			padding: 20px;
 		}
+
+		div img {
+			margin: 1px;
+			float: left;
+		}
 	</style>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,11 +29,18 @@
 
 <body>
 	<script>
-		$(function() {
-			$('#body').load('bodyLayout.html');
+		$(document).ready(function(){
+		    $("#heroSearchKey").keyup(function(e) {
+		    	var code = e.keyCode || e.which; 
+
+		    	if (code == 13) {
+		    		// get data from db and put to Ouput Heroes
+		    	}
+		    });
 		});
 	</script>
 
+	<!-- drag/drop mechanism -->
 	<script>
 		function allowDrop(event) {
 			event.preventDefault();
@@ -38,98 +50,370 @@
 			event.dataTransfer.setData("text", event.target.id);
 		}
 
+		/*
+		drop hero images on table's cells
+		- check if an image exists in a cell, override it
+		- do not allow duplicate heroes on different cells
+		*/
 		function drop(event) {
 			event.preventDefault();
-			var data = event.dataTransfer.getData("text");
-			console.log(data);
-			event.target.appendChild(document.getElementById(data));
+
+			if (isHeroDuplicated(event)) {
+				return false;
+			};
+
+			var heroImageId = event.dataTransfer.getData("text");
+
+			var clone = document.getElementById(heroImageId).cloneNode(true);
+
+			if (event.target.childElementCount >= 2) {
+				event.target.removeChild(event.target.childNodes[1]);
+			}
+
+			event.target.appendChild(clone);
+		}
+
+		function isHeroDuplicated(event) {
+			var heroImageId = event.dataTransfer.getData("text");
+			var tbody = event.target.parentNode.parentNode;
+			var duplicated = false;
+
+			tbody.childNodes.forEach(function(tr) {
+				tr.childNodes.forEach(function(td) {
+					if (td.childElementCount >= 2) {
+						var imageId = td.childNodes[1].id;
+						if (heroImageId == imageId) {
+							duplicated = true;
+						}
+					}
+				});
+			});
+
+			return duplicated;
 		}
 	</script>
 
-	<h1>DotA 2 Winning Prediction</h1>
+	<!-- add table rows for drag/drop table-->
+	<script>
+		// select roles dropdown for each cell in table
+		function selectRoles(row, col) {
+			var select = document.createElement("select");
+			select.setAttribute("id", "selectRoles" + row + "" + col);
 
-	<div class="form-group">
-	  <label for="usr">Search Heroes:</label>
-	  <input type="text" class="form-control" id="usr">
-	</div>
+			var carry = document.createElement("option");
+			carry.text = "Carry";
+			var mid = document.createElement("option");
+			mid.text = "Mid";
+			var offlane = document.createElement("option");
+			offlane.text = "Offlane";
+			var support4 = document.createElement("option");
+			support4.text = "Support 4";
+			var support5 = document.createElement("option");
+			support5.text = "Support 5";
+			var jungler = document.createElement("option");
+			jungler.text = "Jungler";
 
-	<div class="panel panel-default">
-	 	<div class="panel-heading">Output Heroes</div>
-	</div>
+			select.add(carry);
+			select.add(mid);
+			select.add(offlane);
+			select.add(support4);
+			select.add(support5);
+			select.add(jungler);
+		
+			return select;
+		}
 
-	<div class="panel panel-default">
-		<div class="panel-heading">Drag/Drop Heroes for 2 Teams</div>
-		<!--		<div class="panel-body">-->
-<<<<<<< HEAD
-		<div id="dragDropHeroImages" class="panel panel-default">
-			<img id="drag1" class="img-responsive" src="../../static/public/assets/images/hero-images/beastmaster_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-			<!-- <div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-				<img class="img-responsive" src="../../static/public/assets/images/hero-images/jakiro_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-			</div>
-			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-				<img class="img-responsive" src="/static/public/assets/images/hero-images/nyx_assassin_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-			</div>
-			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-				<img class="img-responsive" src="/static/public/assets/images/hero-images/doom_bringer_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-			</div>
-			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-				<img class="img-responsive" src="/static/public/assets/images/hero-images/terrorblade_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-			</div>
-			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-				<img class="img-responsive" src="/static/public/assets/images/hero-images/clinkz_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-			</div>
-			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-				<img class="img-responsive" src="/static/public/assets/images/hero-images/leshrac_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-			</div>
-			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-				<img class="img-responsive" src="/static/public/assets/images/hero-images/shadow_demon_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-			</div>
-			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-				<img class="img-responsive" src="/static/public/assets/images/hero-images/vengefulspirit_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-			</div>
-			<div class="dragDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
-				<img class="img-responsive" src="/static/public/assets/images/hero-images/viper_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
-			</div> -->
+		$(function() {
+			var table  = document.getElementById("tableDragDrop");
+			var tbody = table.getElementsByTagName("tbody")[0];
+
+		    for(var i = 0; i < 5; i++) {
+		        var tr = tbody.insertRow();
+
+		        for(var j = 0; j < 2; j++) {
+					var td = tr.insertCell();
+
+					//td.style.display = "inline-block";
+
+					td.ondrop =  function(event) {
+						drop(event);
+					};
+					td.ondragover =  function(event) {
+						allowDrop(event);
+					};
+
+					td.appendChild(selectRoles(i, j));
+		        }
+		    }
+		});
+	</script>
+
+	<div class="container">
+	
+		<h1>DotA 2 Winning Prediction</h1>
+			
+
+		<div class="form-group">
+		  <label for="usr">Search Heroes:</label>
+		  <input id="heroSearchKey" type="text" class="form-control">
 		</div>
-	<table class="table table-bordered" 
-		style="table-layout: fixed">
-		<thead>
-			<tr>
-		    	<th>Radiant</th>
-		        <th>Dire</th>
-		    </tr>
-	    </thead>
-	    <tbody>
-	 	    <tr>
-		        <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
-	        	<td></td>
-	      	</tr>
-	      	<tr>
-		        <td></td>
-		        <td></td>
-		    </tr>
-		    <tr>
-		        <td></td>
-		        <td></td>
-		    </tr>
-		    <tr>
-		        <td></td>
-		        <td></td>
-		    </tr>
-		    <tr>
-		        <td></td>
-		        <td></td>
-		    </tr>
-	    </tbody>
-	</table>
 
-	<!--TODO: fix dropping multiples images aligned together as rows, cols in the table -->
-	<div class="dropDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+		<div class="panel panel-default">
+		 	<div class="panel-heading">Output Heroes</div>
+		</div>
 
-	</div>
+		<script>
+			$(document).ready(function(){
+			    $('#createHeroSubmit').click(function (event) {
+				  	var hero = Hero();
+				  	console.log(hero);
 
-	<div class="dropDiv" ondrop="drop(event)" ondragover="allowDrop(event)">
+				  	if (isHeroAnyNullAtrr(hero)) {
+				  		alert("You need to fulfill the form.");
+				  	} else {
+				  		// execute create function with params from hero object
+					}
+				});
 
+				$('#updateHeroSubmit').click(function (event) {
+				  	var hero = Hero();
+				  	console.log(hero);
+
+				  	if (hero.name == "") {
+				  		alert("You need to fill the hero's name.");
+				  	} else {
+				  		// execute update function with params from hero object
+					}
+				});
+
+
+				$('#predictOutput').click(function (event) {
+					var radiant = Math.random() * 100;
+					var dire = 100 - radiant;
+					
+					$('#radiantPrediction').text(radiant + ' %');
+					$('#direPrediction').text(dire + ' %');
+				});
+
+			    function isHeroAnyNullAtrr(Hero) {
+			    	var nullAtrr = false;
+
+			    	if (Hero.name == "" || Hero.primaryAttribute == "" || Hero.strengthBase == "" || Hero.strengthGain == "" || Hero.agilityBase == ""
+						|| Hero.agilityGain == "" || Hero.intelligenceBase == "" || Hero.intelligenceGain == "" || Hero.moveSpeed == "" || Hero.armorBase == ""
+						|| Hero.damageBaseMin == "" || Hero.damageBaseMax == "" || Hero.attackRange == "" || Hero.baseAttackTime == "" || Hero.attackPoint == ""
+						|| Hero.attackBackswing == "" || Hero.visionDay == "" || Hero.visionNight == "" || Hero.turnRate == "" || Hero.collisionSize == "" 
+						|| Hero.healthRegen == "" || Hero.legs == "") {
+			    		nullAtrr = true;
+			    	}
+
+			    	return nullAtrr;
+			    }
+
+			    function Hero() {
+			    	var Hero = {};
+
+			    	var name = $('#createName').val();
+					var primaryAttribute = $('#createPrimaryAttribute').val();
+					var strengthBase = $('#createStrengthBase').val();
+					var strengthGain = $('#createStrengthGain').val();
+					var agilityBase = $('#createAgilityBase').val();
+					var agilityGain = $('#createAgilityGain').val();
+					var intelligenceBase = $('#createIntelligenceBase').val();
+					var intelligenceGain = $('#createIntelligenceGain').val();
+					var moveSpeed = $('#createMoveSpeed').val();
+					var armorBase = $('#createArmorBase').val();
+					var damageBaseMin = $('#createDamageBaseMin').val();
+					var damageBaseMax = $('#createDamageBaseMax').val();
+					var attackRange = $('#createAttackRange').val();
+					var baseAttackTime = $('#createBaseAttackTime').val();
+					var attackPoint = $('#createAttackPoint').val();
+					var attackBackswing = $('#createAttackBackswing').val();
+					var visionDay = $('#createVisionDay').val();
+					var visionNight = $('#createVisionNight').val();
+					var turnRate = $('#createTurnRate').val();
+					var collisionSize = $('#createCollisionSize').val();
+					var healthRegen = $('#createHealthRegen').val();
+					var legs = $('#createLegs').val();
+
+					Hero.name = name;
+					Hero.primaryAttribute = primaryAttribute;
+					Hero.strengthBase = strengthBase;
+					Hero.strengthGain = strengthGain;
+					Hero.agilityBase = agilityBase;
+					Hero.agilityGain = agilityGain;
+					Hero.intelligenceBase = intelligenceBase;
+					Hero.intelligenceGain = intelligenceGain;
+					Hero.moveSpeed = moveSpeed;
+					Hero.armorBase = armorBase;
+					Hero.damageBaseMin = damageBaseMin;
+					Hero.damageBaseMax = damageBaseMax;
+					Hero.attackRange = attackRange;
+					Hero.baseAttackTime = baseAttackTime;
+					Hero.attackPoint = attackPoint;
+					Hero.attackBackswing = attackBackswing;
+					Hero.visionDay = visionDay;
+					Hero.visionNight = visionNight;
+					Hero.turnRate = turnRate;
+					Hero.collisionSize = collisionSize;
+					Hero.healthRegen = healthRegen;
+					Hero.legs = legs;
+
+					return Hero;
+			    }
+			});
+		</script>
+
+		<div class="modal fade" id="heroModal" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <form>
+		          <div class="form-group">
+		            <label for="recipient-name" class="col-form-label">Name:</label>
+		            <input type="text" class="form-control" id="createName">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Primary Attribute:</label>
+		            <input type="text" class="form-control" id="createPrimaryAttribute">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Strength Base:</label>
+		            <input type="text" class="form-control" id="createStrengthBase" min="1" max="5">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Strength Gain:</label>
+		            <input type="text" class="form-control" id="createStrengthGain">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Agility Base:</label>
+		            <input type="text" class="form-control" id="createAgilityBase">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Agility Gain:</label>
+		            <input type="text" class="form-control" id="createAgilityGain">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Intelligence Base:</label>
+		            <input type="text" class="form-control" id="createIntelligenceBase">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Intelligence Gain:</label>
+		            <input type="text" class="form-control" id="createIntelligenceGain">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Move Speed:</label>
+		            <input type="text" class="form-control" id="createMoveSpeed">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Armor Base:</label>
+		            <input type="text" class="form-control" id="createArmorBase">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Damage Base Min:</label>
+		            <input type="text" class="form-control" id="createDamageBaseMin">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Damage Base Max:</label>
+		            <input type="text" class="form-control" id="createDamageBaseMax">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Attack Range:</label>
+		            <input type="text" class="form-control" id="createAttackRange">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Base Attack Time:</label>
+		            <input type="text" class="form-control" id="createBaseAttackTime">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Attack Point:</label>
+		            <input type="text" class="form-control" id="createAttackPoint">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Attack Backswing:</label>
+		            <input type="text" class="form-control" id="createAttackBackswing">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Vision Day:</label>
+		            <input type="text" class="form-control" id="createVisionDay">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Vision Night:</label>
+		            <input type="text" class="form-control" id="createVisionNight">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Turn Rate:</label>
+		            <input type="text" class="form-control" id="createTurnRate">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Collision Size:</label>
+		            <input type="text" class="form-control" id="createCollisionSize">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Health Regen:</label>
+		            <input type="text" class="form-control" id="createHealthRegen">
+		          </div>
+		          <div class="form-group">
+		            <label for="message-text" class="col-form-label">Legs:</label>
+		            <input type="text" class="form-control" id="createLegs">
+		          </div>
+		        </form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button id="createHeroSubmit" type="button" class="btn btn-primary">Submit</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#heroModal">Create Hero</button>
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#heroModal">Update Hero</button>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">Drag/Drop Heroes for 2 Teams</div>
+			<div class="panel-body">
+				<img id="beastmaster_sb" class="img-responsive" src="../assets/images/hero-images/beastmaster_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+				<img id="jakiro_sb" class="img-responsive" src="../assets/images/hero-images/jakiro_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+				<img id="nyx_assassin_sb" class="img-responsive" src="../assets/images/hero-images/nyx_assassin_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+				<img id="doom_bringer_sb" class="img-responsive" src="../assets/images/hero-images/doom_bringer_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+				<img id="terrorblade_sb" class="img-responsive" src="../assets/images/hero-images/terrorblade_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+				<img id="rattletrap_sb" class="img-responsive" src="../assets/images/hero-images/rattletrap_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+				<img id="leshrac_sb" class="img-responsive" src="../assets/images/hero-images/leshrac_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+				<img id="nevermore_sb" class="img-responsive" src="../assets/images/hero-images/nevermore_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+				<img id="vengefulspirit_sb" class="img-responsive" src="../assets/images/hero-images/vengefulspirit_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+				<img id="viper_sb" class="img-responsive" src="../assets/images/hero-images/viper_sb.png" class="img-rounded" draggable="true" ondragstart="drag(event)">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-6 text-center">
+		    	<table id="tableDragDrop" class="table table-bordered" 
+					style="width: 500px; table-layout: fixed;">
+					<thead>
+						<tr>
+					    	<th>Radiant</th>
+					        <th>Dire</th>
+					    </tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+		  	</div>
+		  	
+		  	<div class="col-md-6">
+		    	<button id="predictOutput" type="button" class="btn btn-primary">Predict</button>
+
+				<div id="outputPrediction" class="panel panel-default" style="margin-top: 10px;">
+					<dir>Radiant: <div id="radiantPrediction">0 %</div></dir>
+					<dir>Dire: <div id="direPrediction">0 %</div></dir>
+				</div>
+		  	</div>
+		</div>
 	</div>
 </body>
 
