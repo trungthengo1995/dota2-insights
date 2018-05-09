@@ -3,7 +3,8 @@
 
 ## Requirements
 
-* [Node.js](http://nodejs.org/) (v6 or higher)
+* [Node.js](http://nodejs.org/) (v8 or higher)
+* SQLite Studio
 
 ## Installation Steps
 
